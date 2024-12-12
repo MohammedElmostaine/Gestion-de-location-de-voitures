@@ -27,7 +27,7 @@
       <header>
         <h2 class="titree">Liste des Clients</h2>
         <div class="stats">
-          <div><span>
+          <div><span c>
             <?php
               $connection = new mysqli("localhost", "root", "Skimo@1999", "projet1");
               $stmt = $connection->query("SELECT COUNT(*) AS totalClient FROM clients");
@@ -39,6 +39,7 @@
       </header>
       <section class="ajouter">
         <a href="/addclient.php"><button class="ajouter-button">Ajouter un Client</button></a>
+        <a href="/addcar.php"><button class="ajouter-button">Ajouter une Voiture</button></a>
       </section>
       <section class="table-container">
         <table>
