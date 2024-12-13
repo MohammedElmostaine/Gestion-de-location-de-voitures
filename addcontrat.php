@@ -52,7 +52,7 @@
           $adresse = $_POST["adresse"];
 
           $connection = new mysqli("localhost", "root", "123456", "projet1");
-          $stmt = $connection->prepare("INSERT INTO clients ( Nom, Ntele, Adresse) VALUES ( ?, ?, ?)");
+          $stmt = $connection->prepare("INSERT INTO contrat ( Nom, Ntele, Adresse) VALUES ( ?, ?, ?)");
           $stmt->bind_param( "sis",$nom, $telephone, $adresse);
           if ($stmt->execute()) {
             echo "<p class='success-message'>Client ajouté avec succès !</p>";

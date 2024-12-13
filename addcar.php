@@ -17,9 +17,9 @@
       </div>
       <nav>
         <ul>
-          <li><a href="/index.php" title="Clients"><i class="fa-solid fa-user"></i></a></li>
-          <li><a href="#" title="Voitures"><i class="fa-solid fa-car"></i></a></li>
-          <li><a href="#" title="Contrats"><i class="fa-solid fa-file-contract"></i></a></li>
+        <li><a href="/index.php" title="Clients"><i class="fa-solid fa-user"></i></a></li>
+          <li><a href="/voiturelist.php" title="Voitures"><i class="fa-solid fa-car"></i></a></li>
+          <li><a href="/Contratslist.php" title="Contrats"><i class="fa-solid fa-file-contract"></i></a></li>
         </ul>
       </nav>
     </aside>
@@ -57,8 +57,8 @@
           $annee = $_POST["annee"];
           
 
-          $connection = new mysqli("localhost", "root", "Skimo@1999", "projet1");
-          $stmt = $connection->prepare("INSERT INTO voiture (Nimmatriculation, Marque, modele, Annee) VALUES (?, ?, ?, ?)");
+          $connection = new mysqli("localhost", "root", "123456", "projet1");
+          $stmt = $connection->prepare("INSERT INTO voitures (Nimmatriculation, Marque, modele, Annee) VALUES (?, ?, ?, ?)");
           $stmt->bind_param("sssi", $Nimmatriculation, $marque, $modele, $annee);
           if ($stmt->execute()) {
             echo "<p class='success-message'>Voiture ajoutée avec succès !</p>";

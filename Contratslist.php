@@ -17,7 +17,7 @@
       </div>
       <nav>
         <ul>
-        <li><a href="/index.php" title="Clients"><i class="fa-solid fa-user"></i></a></li>
+          <li><a href="/index.php" title="Clients"><i class="fa-solid fa-user"></i></a></li>
           <li><a href="/voiturelist.php" title="Voitures"><i class="fa-solid fa-car"></i></a></li>
           <li><a href="/Contratslist.php" title="Contrats"><i class="fa-solid fa-file-contract"></i></a></li>
         </ul>
@@ -25,46 +25,50 @@
     </aside>
     <main>
       <header>
-        <h2 class="titree">Liste des Clients</h2>
+        <h2 class="titree">Liste des Contracts</h2>
         <div class="stats">
-          <div><span c>
+          <div><span >
             <?php
               $connection = new mysqli("localhost", "root", "123456", "projet1");
-              $stmt = $connection->query("SELECT COUNT(*) AS totalClient FROM clients");
-              echo $stmt ? $stmt->fetch_assoc()["totalClient"] : "Non défini";
+              $stmt = $connection->query("SELECT COUNT(*) AS totalcontrats FROM contrats");
+              echo $stmt ? $stmt->fetch_assoc()["totalcontrats"] : "Non défini";
             ?>
-          </span> Clients enregistrés</div>
+          </span> contrats enregistrés</div>
           
         </div>
       </header>
       <section class="ajouter">
-        <a href="/addclient.php"><button class="ajouter-button">Ajouter un Client</button></a>
         
+        <a href="/addcontrat.php"><button class="ajouter-button">Ajouter une Contract</button></a>
       </section>
       <section class="table-container">
         <table>
           <thead>
             <tr>
-              <th>ID Client</th>
-              <th>Nom Complet</th>
-              <th>Téléphone</th>
-              <th>Adresse</th>
+              <th>Numero du Contract</th>
+              <th>Date de Debut</th>
+              <th>Date de Fin</th>
+              <th>Duree</th>
+              <th>ID client</th>
+              <th>N° D'imatriculation</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <?php
-              $stmt = $connection->query("SELECT * FROM clients");
+              $stmt = $connection->query("SELECT * FROM contrats");
               while ($row = $stmt->fetch_assoc()) {
             ?>
             <tr>
+              <td><?= $row["Numero"] ?></td>
+              <td><?= $row["DatedDebut"] ?></td>
+              <td><?= $row["DatedFin"] ?></td>
+              <td><?= $row["Duree"] ?></td>
               <td><?= $row["Nclient"] ?></td>
-              <td><?= $row["Nom"] ?></td>
-              <td><?= $row["Ntele"] ?></td>
-              <td><?= $row["Adresse"] ?></td>
+              <td><?= $row["Nimmatriculation"] ?></td>
               <td>
-                <a href="/editclient.php?id=<?= $row["Nclient"] ?>" class="btn-edit">Modifier</a>
-                <a href="/deleteclient.php?id=<?= $row["Nclient"] ?>" class="btn-delete" 
+                <a href="/editvoitures.php?id=<?= $row["Numero"] ?>" class="btn-edit">Modifier</a>
+                <a href="/deletevoitures.php?id=<?= $row["Numero"] ?>" class="btn-delete" 
                    onclick="return confirm('Voulez-vous vraiment supprimer ce client ?');">Supprimer</a>
               </td>
             </tr>
