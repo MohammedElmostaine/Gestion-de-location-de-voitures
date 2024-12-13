@@ -1,3 +1,6 @@
+<?php
+include "config.php"
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -25,40 +28,65 @@
     </aside>
     <main>
       <header>
-        <h2>Ajouter un Client</h2>
+        <h2>Ajouter une contrat</h2>
       </header>
+      
       <section class="form-container">
-        <form action="/addclient.php" method="POST">
+        <form action="/addcontrat.php" method="POST">
           <div class="form-group">
-            <label for="nom">Nom Complet:</label>
-            <input type="text" id="nom" name="nom" required>
+            <label for="Dateddebut">Date de Debut:</label>
+            <input type="date" id="Dateddebut" name="Dateddebut" required>
           </div>
           <div class="form-group">
-            <label for="telephone">Téléphone:</label>
-            <input type="text" id="telephone" name="telephone" required>
+            <label for="DatedFin">Date de Fin:</label>
+            <input type="date" id="DatedFin" name="DatedFin" required>
           </div>
           <div class="form-group">
-            <label for="adresse">Adresse:</label>
-            <input type="text" id="adresse" name="adresse" required>
+            <label for="Duree">Duree:</label>
+            <input type="text" id="Duree" name="Duree" required>
+          </div>
+          <div class="form-group">
+            <label for="Nimmatriculation">N° d' immatriculation:</label>
+            <select name="Nimmatriculation" id="Nimmatriculation">
+              <?php
+               $stmt = mysqli_query($connection,"SELECT Nimmatriculation FROM voitures");
+               
+               
+               while($result = mysqli_fetch_assoc($stmt)){
+               echo '<option value = "'.$result['Nimmatriculation'].'">'.$result['Nimmatriculation'].'</option>';
+               }
+              ?>
+              
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="Nclient">ID client:</label>
+            <select name="Nclient" id="Nclient">
+              <!-- <option value=""></option> -->
+              <?php
+               $stmt = mysqli_query($connection,"SELECT Nclient FROM clients");
+               
+               
+               while($result = mysqli_fetch_assoc($stmt)){
+               echo '<option value = "'.$result['Nclient'].'">'.$result['Nclient'].'</option>';
+               }
+              ?>
+              
+            </select>
           </div>
           <button type="submit" class="btn-submit">Ajouter</button>
         </form>
       </section>
       <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-           
-          $nom = $_POST["nom"];
-          $telephone = $_POST["telephone"];
-          $adresse = $_POST["adresse"];
-
-          $connection = new mysqli("localhost", "root", "123456", "projet1");
-          $stmt = $connection->prepare("INSERT INTO contrat ( Nom, Ntele, Adresse) VALUES ( ?, ?, ?)");
-          $stmt->bind_param( "sis",$nom, $telephone, $adresse);
-          if ($stmt->execute()) {
-            echo "<p class='success-message'>Client ajouté avec succès !</p>";
-          } else {
-            echo "<p class='error-message'>Erreur lors de l'ajout du client.</p>";
-          }
+          
+          $Dateddebut = $_POST["Dateddebut"];
+          $DatedFin = $_POST["DatedFin"];
+          $Duree = $_POST["Duree"];
+          $Nimmatriculation = $_POST["Nimmatriculation"];
+          $Nclient = $_POST["Nclient"];
+          $stmtup = mysqli_query($connection,"INSERT INTO   contrats(Dateddebut,DatedFin,Duree,Nimmatriculation,Nclient) values  ('$Dateddebut','$DatedFin','$Duree','$Nimmatriculation','$Nclient')");
+          header("Location: Contratslist.php");
         }
       ?>
     </main>

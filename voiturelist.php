@@ -1,3 +1,6 @@
+<?php
+include "config.php"
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,9 +32,11 @@
         <div class="stats">
           <div><span >
             <?php
-              $connection = new mysqli("localhost", "root", "123456", "projet1");
-              $stmt = $connection->query("SELECT COUNT(*) AS totalvoiture FROM voitures");
-              echo $stmt ? $stmt->fetch_assoc()["totalvoiture"] : "Non défini";
+              
+              $sql = "SELECT COUNT(*) AS totalvoiture FROM voitures";
+              $result = mysqli_query($connection,$sql);
+              $totalvoiture = mysqli_fetch_assoc($result)["totalvoiture"];
+              echo $totalvoiture;
             ?>
           </span> voitures enregistrés</div>
           
@@ -54,8 +59,8 @@
           </thead>
           <tbody>
             <?php
-              $stmt = $connection->query("SELECT * FROM voitures");
-              while ($row = $stmt->fetch_assoc()) {
+              $stmt = mysqli_query( $connection,"SELECT * FROM voitures");
+              while ($row = mysqli_fetch_assoc($stmt)) {
             ?>
             <tr>
               <td><?= $row["Nimmatriculation"] ?></td>
@@ -64,7 +69,7 @@
               <td><?= $row["Annee"] ?></td>
               <td>
                 <a href="/editvoitures.php?id=<?= $row["Nimmatriculation"] ?>" class="btn-edit">Modifier</a>
-                <a href="/deletevoitures.php?id=<?= $row["Nimmatriculation"] ?>" class="btn-delete" 
+                <a href="/deletecar.php?id=<?= $row["Nimmatriculation"] ?>" class="btn-delete" 
                    onclick="return confirm('Voulez-vous vraiment supprimer ce client ?');">Supprimer</a>
               </td>
             </tr>

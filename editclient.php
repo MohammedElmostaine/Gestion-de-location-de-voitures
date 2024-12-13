@@ -1,5 +1,5 @@
 <?php
-include "config.php"
+include "config.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,7 +10,7 @@ include "config.php"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/style.css">
-  <title>Ajouter une Voiture</title>
+  <title>Edit un Client</title>
 </head>
 <body>
   <div class="container">
@@ -28,41 +28,45 @@ include "config.php"
     </aside>
     <main>
       <header>
-        <h2>Ajouter une Voiture</h2>
+        <h2>Edit un Client</h2>
       </header>
+
+      <?php
+      if (isset($_GET["id"])) {
+        $id = $_GET["id"];
+        
+        $stmt = mysqli_query($connection,"SELECT * FROM clients WHERE Nclient = '$id'");
+        $result= mysqli_fetch_assoc($stmt);
+        $nom = $result['Nom'];
+        $tel = $result['Ntele'];
+        $adresse = $result['Adresse'];
+    } 
+      ?>
       <section class="form-container">
-        <form action="/addcar.php" method="POST">
-            <div class="form-group">
-            <label for="prix">Numer d'immatriculation:</label>
-            <input type="text" id="prix" name="Nimmatriculation" required>
+        <form action="/editclient.php" method="POST">
+          <div class="form-group">
+            <label for="nom">Nom Complet:</label>
+            <input type="text" id="nom" name="nom" value="<?= $nom?>" required >
           </div>
           <div class="form-group">
-            <label for="marque">Marque:</label>
-            <input type="text" id="marque" name="marque" required>
+            <label for="telephone">Téléphone:</label>
+            <input type="text" id="telephone" name="telephone" value="<?= $tel?>" required>
           </div>
           <div class="form-group">
-            <label for="modele">Modèle:</label>
-            <input type="text" id="modele" name="modele" required>
+            <label for="adresse">Adresse:</label>
+            <input type="text" id="adresse" name="adresse" value="<?= $adresse?>" required>
           </div>
-          <div class="form-group">
-            <label for="annee">Année:</label>
-            <input type="number" id="annee" name="annee" required>
-          </div>
-          
-          <button type="submit" class="btn-submit">Ajouter</button>
+          <button type="submit" name="go" value="<?= $id?>" class="btn-submit">Edit</button>
         </form>
       </section>
       <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          $Nimmatriculation = $_POST["Nimmatriculation"];
-          $marque = $_POST["marque"];
-          $modele = $_POST["modele"];
-          $annee = $_POST["annee"];
-          
-
-          
-          $stmtup = mysqli_query($connection,"INSERT INTO   voitures(Nimmatriculation,Marque,modele,Annee) values  ('$Nimmatriculation','$marque','$modele','$annee')");
-          header("Location: voiturelist.php");
+          $id = $_POST["go"];
+          $nom = $_POST["nom"];
+          $telephone = $_POST["telephone"];
+          $adresse = $_POST["adresse"];
+          $stmtup = mysqli_query($connection,"UPDATE clients SET  Nom = '$nom',Ntele ='$telephone',Adresse ='$adresse' WHERE Nclient = '$id'");
+          header("Location: index.php");
         }
       ?>
     </main>

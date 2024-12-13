@@ -1,3 +1,6 @@
+<?php
+include "config.php"
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -51,14 +54,8 @@
           $telephone = $_POST["telephone"];
           $adresse = $_POST["adresse"];
 
-          $connection = new mysqli("localhost", "root", "123456", "projet1");
-          $stmt = $connection->prepare("INSERT INTO clients ( Nom, Ntele, Adresse) VALUES ( ?, ?, ?)");
-          $stmt->bind_param( "sis",$nom, $telephone, $adresse);
-          if ($stmt->execute()) {
-            echo "<p class='success-message'>Client ajouté avec succès !</p>";
-          } else {
-            echo "<p class='error-message'>Erreur lors de l'ajout du client.</p>";
-          }
+          $stmtup = mysqli_query($connection,"INSERT INTO   clients(Nom,Ntele,Adresse) values  ('$nom','$telephone','$adresse')");
+          header("Location: index.php");
         }
       ?>
     </main>

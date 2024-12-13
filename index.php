@@ -1,3 +1,6 @@
+<?php
+include "config.php"
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,9 +32,11 @@
         <div class="stats">
           <div><span c>
             <?php
-              $connection = new mysqli("localhost", "root", "123456", "projet1");
-              $stmt = $connection->query("SELECT COUNT(*) AS totalClient FROM clients");
-              echo $stmt ? $stmt->fetch_assoc()["totalClient"] : "Non défini";
+              
+              $sql = "SELECT COUNT(*) AS totalClient FROM clients";
+              $result = mysqli_query($connection,$sql);
+              $count = mysqli_fetch_assoc($result)["totalClient"];
+              echo $count;
             ?>
           </span> Clients enregistrés</div>
           
@@ -64,7 +69,7 @@
               <td><?= $row["Adresse"] ?></td>
               <td>
                 <a href="/editclient.php?id=<?= $row["Nclient"] ?>" class="btn-edit">Modifier</a>
-                <a href="/deleteclient.php?id=<?= $row["Nclient"] ?>" class="btn-delete" 
+                <a href="/deletclient.php?id=<?= $row["Nclient"] ?>" class="btn-delete" 
                    onclick="return confirm('Voulez-vous vraiment supprimer ce client ?');">Supprimer</a>
               </td>
             </tr>
